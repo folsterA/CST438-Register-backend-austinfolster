@@ -42,7 +42,6 @@ public class ScheduleController {
 	@Autowired
 	GradebookService gradebookService;
 	
-	
 	/*
 	 * get current schedule for student.
 	 */
