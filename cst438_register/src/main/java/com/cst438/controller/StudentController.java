@@ -5,10 +5,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.cst438.domain.Student;
+import com.cst438.domain.StudentDTO;
 import com.cst438.domain.StudentRepository;
 
 @RestController
@@ -20,20 +22,20 @@ public class StudentController {
 	
 	// add a student to the system
 	@PostMapping("addStudent")
-	public Student AddStudent( String studentName, String studentEmail) {
+	public Student AddStudent( @RequestBody StudentDTO student) {
 		// check for student email
-		Student existingStudent = studentRepository.findByEmail(studentEmail);
+		Student existingStudent = studentRepository.findByEmail(student.email);
 		if (existingStudent != null) {
-			throw  new ResponseStatusException( HttpStatus.BAD_REQUEST, "Student with email already exists.  " + studentEmail);
+			throw  new ResponseStatusException( HttpStatus.BAD_REQUEST, "Student with email already exists.  " + student.email);
 		}
 		
 		// add new student to the system
-		Student student = new Student();
-		student.setName(studentName);
-		student.setEmail(studentEmail);
+		Student newStudent = new Student();
+		newStudent.setName(student.name);
+		newStudent.setEmail(student.email);
 		
-		studentRepository.save(student);
-		return student;
+		studentRepository.save(newStudent);
+		return newStudent;
 	}
 	
 	// student registration hold

@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.cst438.controller.StudentController;
 import com.cst438.domain.Student;
+import com.cst438.domain.StudentDTO;
 import com.cst438.domain.StudentRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -40,11 +41,13 @@ public class JunitTestStudent {
 	@Test
 	public void addStudent() throws Exception {
 		MockHttpServletResponse response;
-		
+		StudentDTO student = new StudentDTO(0, "test", "test", 0, null );
 		// add test student
 		response = mvc.perform(
 				MockMvcRequestBuilders
-					.post("/addStudent?studentName=" + TEST_STUDENT_NAME + ",studentEmail=" + TEST_STUDENT_EMAIL)
+					.post("/addStudent")
+					.contentType(MediaType.APPLICATION_JSON)
+					.content("{\"name\": \"123\", \"email\": \"456\"}")
 					.accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 	
 		// verify response
