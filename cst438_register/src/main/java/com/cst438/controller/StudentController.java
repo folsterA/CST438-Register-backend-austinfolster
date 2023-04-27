@@ -35,6 +35,7 @@ public class StudentController {
 		newStudent.setEmail(student.email);
 		
 		studentRepository.save(newStudent);
+		System.out.println("new student saved student name: " + student.name + " email: " + student.email);
 		return newStudent;
 	}
 	
